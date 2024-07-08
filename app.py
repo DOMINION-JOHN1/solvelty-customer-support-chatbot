@@ -13,7 +13,7 @@ app = Flask(__name__)
 
 # Set other environment variables
 os.environ["PINECONE_API_KEY"] = os.getenv("PINECONE_API_KEY")
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+OPENAI_API_KEY = os.getenv("SOLVELTY")
 
 # Initialize model and embeddings
 model = ChatOpenAI(openai_api_key=OPENAI_API_KEY, model="gpt-3.5-turbo")
