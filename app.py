@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import os
 from dotenv import load_dotenv
 from langchain_openai.embeddings import OpenAIEmbeddings
@@ -10,7 +11,7 @@ from langchain_core.runnables import RunnablePassthrough
 
 # Initialize Flask app
 app = Flask(__name__)
-
+CORS(app) 
 # Set other environment variables
 os.environ["PINECONE_API_KEY"] = os.getenv("PINECONE_API_KEY")
 OPENAI_API_KEY = os.getenv("SOLVELTY")
