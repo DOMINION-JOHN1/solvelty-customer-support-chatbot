@@ -59,7 +59,7 @@ def get_response(user_input):
 #def home():
 #    return "Welcome to the Solvelty Customer Support Chatbot API!", 200
 
-@app.route("/chatbot", methods=["POST"])
+@app.route("/", methods=["POST"])
 def chatbot():
     data = request.json
     if "question" not in data:
