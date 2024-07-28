@@ -55,9 +55,9 @@ def get_response(user_input):
     response = chain.invoke(question)
     return response
 
-@app.route("/", methods=["GET"])
-def home():
-    return "Welcome to the Solvelty Customer Support Chatbot API!", 200
+#@app.route("/", methods=["GET"])
+#def home():
+#    return "Welcome to the Solvelty Customer Support Chatbot API!", 200
 
 @app.route("/chatbot", methods=["POST"])
 def chatbot():
