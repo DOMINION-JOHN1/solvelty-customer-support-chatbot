@@ -2,8 +2,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import os
 from dotenv import load_dotenv
-from langchain_openai.embeddings import OpenAIEmbeddings
-from langchain_openai.chat_models import ChatOpenAI
+from langchain_google_genai import GoogleGenerativeAI, GoogleGenerativeAIEmbeddings
 from langchain_core.output_parsers import StrOutputParser
 from langchain.prompts import PromptTemplate
 from langchain_pinecone import PineconeVectorStore
@@ -14,11 +13,11 @@ app = Flask(__name__)
 CORS(app) 
 # Set other environment variables
 os.environ["PINECONE_API_KEY"] = os.getenv("PINECONE_API_KEY")
-OPENAI_API_KEY = os.getenv("SOLVELTY")
+API_KEY = os.getenv("SOLVELTY")
 
 # Initialize model and embeddings
-model = ChatOpenAI(openai_api_key=OPENAI_API_KEY, model="gpt-3.5-turbo")
-embeddings = OpenAIEmbeddings(model="text-embedding-3-large", openai_api_key=OPENAI_API_KEY)
+MODEL = GoogleGenerativeAI(model="gemini-1.5-flash", google_api_key=API_KEY)
+embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001", google_api_key=API_KEY)
 parser = StrOutputParser()
 
 # Define the prompt template
@@ -38,14 +37,14 @@ prompt = PromptTemplate.from_template(template)
 prompt.format(context="Here is some context", question="Here is a question")
 
 # Create Pinecone Vector Store
-index_name = "sovelty"
+index_name = "solvetydb"
 pinecone = PineconeVectorStore(index_name=index_name, embedding=embeddings)
 
 # Define the chain
 chain = (
     {"context": pinecone.as_retriever(), "question": RunnablePassthrough()}
     | prompt
-    | model
+    | MODEL
     | parser
 )
 
